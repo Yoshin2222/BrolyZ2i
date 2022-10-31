@@ -3420,7 +3420,7 @@ ctrl = 0
 
 [State 190, end]
 type = changeanim
-trigger1 = (var(25)&1) != 0
+;trigger1 = (var(25)&1) != 0
 triggerall = anim = 193 || anim = 0
 trigger1 = !animtime
 ;trigger1 = time > 20
@@ -3428,7 +3428,7 @@ value = 0
 
 [State 190, end]
 type = changeanim
-trigger1 = (var(25)&1) != 0
+;trigger1 = (var(25)&1) != 0
 triggerall = anim != 193 && anim != 0
 trigger1 = pos y >= 0 ;Begin flying up if you haven't already
 trigger1 = vel y > 0 ;Begin flying up if you haven't already
@@ -3437,14 +3437,14 @@ value = 193
 
 [State 0, stop flying]
 type = Posset
-trigger1 = (var(25)&1) != 0
+;trigger1 = (var(25)&1) != 0
 trigger1 = pos y >= 0 ;Begin flying up if you haven't already
 trigger1 = vel y > 0 ;Begin flying up if you haven't already
 y = 0
 
 [State 0, stop flying]
 type = Velset
-trigger1 = (var(25)&1) != 0
+;trigger1 = (var(25)&1) != 0
 trigger1 = pos y >= 0 ;Begin flying up if you haven't already
 trigger1 = vel y > 0 ;Begin flying up if you haven't already
 y = 0
