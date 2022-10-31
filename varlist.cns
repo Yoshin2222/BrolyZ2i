@@ -1,0 +1,309 @@
+;=============================================
+;TO - DO
+;=============================================
+;A.I
+;Cinematic Supers/Finishers
+;Intros
+;Winposes (Look in to custom state mnipulation for this)
+;	https://mugenguild.com/forum/topics/control-p2-throughout-your-characters-win-pose-160621.0.html
+;
+;=============================================
+;System Vars
+;=============================================
+; ----------------------
+; Var name    Type   Purpose
+; --------    ----   -------
+; sysvar(0)   Temp   Set by state 5081 (HITL_SLIDE) to 1 to prevent
+;                    showing ground hit frame in state 5110 (HIT_LIEDOWN).
+;                    Used by guarding states.
+;                    to keep track of which way to jump.
+;                    Used by state 5100 and 5110 to remember downward
+;                    velocity of player just before hitting the ground.
+;                    Used in state 5080 for storing the anim # to display.
+; sysvar(1)   Temp   Used by state 40 (Jump Start) amd 45 (Air Jump Start)
+;sysvar(1) can be used as a condition. Example
+;[State -1, Jump Kick Upwards]
+;type = ChangeState
+;value = 635
+;triggerall = (command = "a")
+;trigger1 = statetype = A && ctrl && sysvar(1) = 0  ;perform while jumping neutral
+;"Note: That last line "Used in state 5080 for storing the anim # to display." 
+;is incorrect! It implies sysvar(1) stores the animation, but it is actually sysvar(2) 
+;doing the job." - Chronan
+;sysvar(2) - Used to offset Dizzy anim
+;sysvar(3) - Dizzy Timer
+;sysvar(4) - Often used in "UNOTag" Leave blank 
+;=============================================
+;System FVars (These don't seem to be generally used. Probably won't need em but good to know)
+;=============================================
+;sysfvar(0)
+;sysfvar(1)
+;sysfvar(2)
+;sysfvar(3)
+;sysfvar(4)
+;=============================================
+;Vars/Integers - (Maximum = 60)
+;=============================================
+;0: throw tech options (Config)
+;1: MAXIMUM Gauge Empty Multiplier (Config)
+;2:
+;3: Hit count for damage scaling (This was a float for some reason)(fvar(13)
+;4: MAXIMUM Mode Life drain rate (Config)
+;5: Palno container for selecting palletes during Intro (Config)
+;6: 
+;--JUGGLE SYSTEM------------------------------------
+;7: System var. (Juggle Potential container)
+;8: System var/Config (Max Juggle) 
+;---------------------------------------------------
+;9: Specific Move Variables
+;	-- General - Wakeup Focus Attack
+;10: Air dash Count (Container)
+;11: Num of Air Dashes permitted (Config)
+;12: Target ID Container
+;13: Super BG choice (Config)
+;14: 
+;15: "Time" container (Used for stuff like Animate blur through hitpause(
+;16: Freeze anim while holding (Charging var)
+;17:
+;18: Minimum damage var (Config)
+;19:
+;20:
+;21:
+;22:
+;23:
+;24: Animelemno Container (Mainly for armouring in Focus Attack)
+;25: z2Y: COMPRESSED HDBZ SYSTEM
+;BITWISE BOOLEAN LIST
+	;Integer Saved
+	;	1	;var(x)&1 	  	= Allows player to use directions to change Pal (config)
+	;These 4 Bits are only used during Pallete selection, so they can be used elswhere if i really want to
+	;This Bit is reused when in State 800 for defining throw type (Off - Fwd, On = Back)
+	;Integer Saved! Also reused for Flip KO Bounce
+	;	2	;var(x)&2 	     	= Overlap check - Up
+	;Float Saved
+	;Also used for Cheap Ko-Standing/Crouching ;Why the fuck was a float used for this??????
+	;	3	;var(x)&4	    	= Overlap check - Down
+	;	4	;var(x)&8 		= Overlap check - Ledt
+	;	5	;var(x)&16 	   	= Overlap check - Right
+	;Integer Saved
+	;Mostly done in conjunction with Projectiles, can of course be used in other ways
+	;	6	;var(x)&32  	        = Juggle System Check: Juggle OFF - 0 = Can Juggle, != Can't
+	;Integer Saved
+	;	7	;var(x)&64  	        = Juggle System Check: Can OTG
+	;	8	;var(x)&128  	        = In Simul Mode
+	;	9	;var(x)&256  	        = Dizzy SND has Played (Bugfix)
+	;	10	;var(x)&512  	        = VS Mini-Game characters check
+	;	11	;var(x)&1024  	        = Juggle System Check: Enemy in Juggle State (Mainly for the flying fucks lol)
+	;	12	;var(x)&2048  	        = Can cancel in to Normals from a Dash (STATENO 100)
+	;2 Integers Saved 
+	;(There used to be 2 different vars taken up for Counter Hit checking, one for regular counter hits,
+	;one related to the Counter Hit Explod. They both check for similar conditions anyway, so didn't see
+	;a point in splitting them, then had that var replaced by a Boolean)
+	;	13	;var(x)&4096  	        = Counter hit check
+	;	14	;var(x)&8192  	        = Super BG has played check (to prevent them playing multiple times)
+	;Integer Saved
+	;	15	;var(x)&16384           = Super Jump Var
+	;	16	;var(x)&32768  	 	= Training Mode detector
+	;Integer Saved
+	;	17	;var(x)&65536 		= Solid or transparent FX (Config)
+	;Integer Saved
+	;	18	;var(x)&131072 		= REPEL PROJECTILE FX
+	;	19	;var(x)&262144 		= General Sound Selection
+	;Integer Saved
+	;	20	;var(x)&524288 		= Ground Bounce Limiter	
+	;Integer Saved (So you can absorb 1 hit)
+	;	21	;var(x)&1048576 	= varset for 1st/2nd state of Focus Attack
+	;Integer Saved
+	;A good chunk of the code checks for the first bit being set but not the second, like this
+	;trigger1 = (var(25)&6291456) = 2097152
+	;	22	;var(x)&2097152 	= First Attack Notification 1
+	;	23	;var(x)&4194304 	= First Attack Notification 2
+	;2 Integers Saved 
+	;(Originally, 2 seperate vars were used for Button Strength and Zetto Decision.
+	;Since these vars are only accessed at the start of states, consolidated it in to 1, and then
+	;further downscaled it to 2 Bits
+	;The idea is bits are assigned at the start of the state, and then used later on
+	;Example, a Medium strength attack turns the first bit on and the second one off, so 1 bit is true, returns 1
+	;We check if the sum of the bit checks = 1 for a medium strength attack, like this
+	;	triggerall = ((var(25)&8388608) !=0) + ((var(25)&16777216) !=0) = 1
+	;0 is light, so both bits are off. Heavy is 2, both are turned on
+	;	24	;var(x)&8388608 	= Button Strength 1 + Zetto Counter Decision
+	;	25	;var(x)&16777216 	= Button Strength 2
+	;Integer Saved
+	;	26	;var(x)&33554432 	= Throws Limiter - Can Throw if bit is off
+	;	27	;var(x)&67108864 	= 
+	;	28	;var(x)&134217728 	= 
+	;	29	;var(x)&268435456 	= 
+	;Integer Saved
+	;	30	;var(x)&536870912 	= Check if Dead 	- Bit 1
+	;	31	;var(x)&1073741824 	= KO SND has played 	- Bit 2
+	;	32	;var(x)&-2147483648	= Superpause is Active check
+;26: Focus Attack charge time (This used to be a float. Why????)
+	;These 2 vars are used for Super pause, the first var being used in conjunction with the System Bit
+	;to freeze stuff like Stun decrement
+	;You can assign values to these vars to automatically apply Superpause as well as freeze relevant timers
+;27: Superpause - Movetime
+;28: Superpause - Time
+;29: Max amount of Palletes (used when selecting at start of the match)
+;30: Dash Collision count - Beam Collision count (HDBZ COMPATIBLE SYSTEM, DON'T FUCK WITH)
+;31: Ticks Back is held down (Charge char)
+;32: Back Charge Buffer (Charge char)
+;33: Ticks Down is held down (Charge char)
+;34: Down Charge Buffer (Charge char)
+;35:
+;36: 
+;37: 
+;38: 
+;39:
+;BITWISE BOOLEAN LIST
+	;	1	;var(x)&1 	  	= MAXIMUM MODE - ACTIVE CHECK
+	;	2	;var(x)&2 	     	= Special cancelling check 
+	;	3	;var(x)&4	    	= Super cancelling check 
+	;	4	;var(x)&8 		= Projectile Armour
+	;	5	;var(x)&16 	   	= Heavy Goliath Charge hit
+	;	6	;var(x)&32  	        = WallBounce Limiter
+	;	7	;var(x)&64  	        = MAXIMUM Detonation TRUE
+	;	8	;var(x)&128  	        = Maximum detonation ended
+	;	9	;var(x)&256  	        = VS Flying characters check (Babidi/Vegetto)
+	;	10	;var(x)&512  	        = 	
+	;	11	;var(x)&1024  	        = 
+	;	12	;var(x)&2048  	        = Backturn Limiter
+	;	13	;var(x)&4096  	        = 
+	;	14	;var(x)&8192  	        = Dizzy Limiter
+	;	15	;var(x)&16384           = 
+	;	16	;var(x)&32768  	 	= Super/Special Cancelling - State exceptions
+	;	17	;var(x)&65536 		= Black Screen during Cinematic Supers Boolean
+	;	18	;var(x)&131072 		=
+	;	19	;var(x)&262144 		=
+	;	20	;var(x)&524288 		=
+	;	21	;var(x)&1048576 	=
+	;	22	;var(x)&2097152 	=
+	;	23	;var(x)&4194304 	=
+	;	24	;var(x)&8388608 	=
+	;	25	;var(x)&16777216 	=
+	;	26	;var(x)&33554432 	=
+	;	27	;var(x)&67108864 	=
+	;	28	;var(x)&134217728 	= FADC (Config)
+	;	29	;var(x)&268435456 	=
+	;	30	;var(x)&536870912 	=
+	;	31	;var(x)&-2147483648	=
+;40: Round Time Container (Get this, Gametime is from whenever you're in a fight till Mugen closes. What???)
+;41: AI Difficulty
+	;Setting the first var to a value above 0 spawns the cinematic rush FX, and assigns it a rotation
+	;-1. So a value of 91 would spwan it with the angle of 90 degrees. The other Var dictates the speed
+	;of the rush FX
+;42: Cinematic Super Background rushing FX - Rotation (Set to 1 to spwan, default direction is left)
+;43: Cinematic Super Background rushing FX - Speed (Default for HDBZ is 20
+;44: 
+;45: X axis Rage Gauge (config)
+;46: Y axis Rage Gauge (config)
+	;Used to hopefully fix Dizzy issues while in Simul. HOPEFULLY
+;47: Dizzy timer - Enemy 0
+;48: Dizzy timer - Enemy 1 
+;49: Dizzy buffer - Enemy 0
+;50: Dizzy buffer - Enemy 1
+;51: 
+;52: 
+;53: EX Cost (think of it as future proofing lol)
+;54: Anim Loop count (Used in the Marvel games, notably XMCOTA)
+;55: AI
+;56:
+;57: counter system notification timer
+;58: Pal Color used with Var 5
+;59: Winpose Container (for controlling P2 in Winposes)
+
+;=============================================
+;FVars/Floats - (Maximum = 39)
+;=============================================
+;fvar(0)  : Used to override CornerPush
+;fvar(1)  : MAXIMUM Bar value
+;fvar(2)  : Damage Detection variable
+;fvar(3)  : Specific Move Variables (Velocities and such)
+;fvar(4)  : "Weight" (Used for velocities)
+;fvar(5)  : Attack Multiplier Replacement (Config)
+;fvar(6)  : MAXIMUM Bar fill rate (Config)
+;fvar(7)  :
+;fvar(8)  : 
+;fvar(9)  :
+;fvar(10) : Damage Dampener
+;fvar(11) : Root Dampener
+;fvar(12) : Draw: Scaling Var
+;fvar(13) : 
+;fvar(14) : X Vel container
+;fvar(15) : Y Vel container
+;fvar(16) : 
+;fvar(17) : 
+;fvar(18):= 
+;fvar(19):= 
+;fvar(20):= 
+;fvar(21):= 
+;fvar(22):= 
+;fvar(23):= 
+;fvar(24):= 
+;fvar(25):= 
+;fvar(26):= 
+;fvar(27):= 
+;fvar(28):= 
+;fvar(29):= 
+;fvar(30):= 
+;fvar(31):= 
+;fvar(32):= 
+;fvar(33):= 
+;fvar(34):= 
+;fvar(35):= 
+;fvar(36):= P1 "Zoom" value (to simulate camera zoom) 
+;fvar(37):= P2 "Zoom" value (to simulate camera zoom)
+;fvar(38):= Initial X Pos (Mainly for Intro stuff)
+;fvar(39):= Initial Y Pos (Mainly for Intro stuff)
+;
+;Personal reminders
+;=============================================
+;Channels
+;=============================================
+;So the channels are
+;-1 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+;- Sin
+;0 = Stepping/landing sounds
+;1 - 2 = General use
+;3: Charge Sound
+;4; Attack voice
+;5: KO Voice
+;6 = Jump/SuperJump SND
+;7 = Super SNDs
+;8-11; Intros exclusive
+;12 = Projectile SNDs
+;20 - 22 = Gethit Sounds
+;
+;Assert special paramters include
+;- nowalk
+;- invisible
+;- intro
+;- noshadow
+;- noFG (Foreground)
+;- noBG (Background)
+;- nobardisplay
+;- noautoturn
+;- timerfrozen
+;- nojugglecheck
+;- nostandguard
+;- nocrouchguard
+;- noairguard
+;
+;Ceil returns the least integer which is greater than or equal to the specified argument, 
+;while Floor returns the greatest integer less than or equal to its argument.
+;
+;In case of using helpers t add to damage scaling (fireballs, supers, etc) use ParentVaradd
+;
+; Team Mode parameters
+;Single, Simul,Turns
+;gethitvar(type) = 0 = none, 1 = High, 2 = Low, 3 = Trip
+;
+;========================================
+;Pasted from Rajaas Urien. Turns out without anything, Mugen just won't run the character. DON'T TOUCH
+;========================================
+[statedef -65536]
+type = A
+ctrl = 0
+[state -65536]
+type = null
+trigger1 = 0

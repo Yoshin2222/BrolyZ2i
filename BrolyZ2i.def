@@ -1,0 +1,56 @@
+[Info]
+name = "Broly Z2i"
+displayname = "Broly"
+versiondate	= 00,00,0000 ; BETA VER
+mugenversion	= 1.0
+author		= "Team Z2" ;Coded by Yoshin222,authorname Team Z2 for compatability
+;pal.defaults	= 1,2,3,4,6,7,8,9,10,11,12
+localcoord = 320,240
+;Initial sprites by Arc System Wroks (ArcSys)
+;Programming/development by Yoshin222
+;Color Seperation expanded on the one by Daniel Matheus/Speedster
+;HUMONGOUS thank you to Hyper Battles. After CS'ing SSJ4 Fur, he came in and expanded the CS to am
+;insane degree. Much appreciated man, seriously!
+;Alt Cliffside Portrait by Apathy(Hatter) && current one by Balthazer
+;Voiced by the awesome Heath Martin
+;Small Portrait by Kercy
+;Victory Portrait/Gotenks drawing by HyperBattles
+;To all the programmers fighting against Mugens Hardcoded bullshittery. Ya'll are beasts,
+;and learning of the methods to overwrite these problems has taught me so much.
+
+[Files]
+sprite		= files\sprite.sff
+anim		= files\animation.air
+sound		= files\sound.snd
+cmd		= files\commands.sf3
+cns		= states\constants.cns
+stcommon		= common1.cns
+st		= states\system.cns
+st2		= states\helpers.cns
+st3		= states\state-2-3.cns
+st4		= states\override.cns
+st5		= states\normals.cns
+st6		= states\specials.cns
+st7		= states\supers.cns
+st8		= config.txt
+st9		= varlist.cns
+
+;====================================================================
+;PALETTE KEYMAP
+[Palette Keymap]
+x        = 4 ;Press button X to select palette 1, etc.
+y        = 5
+z        = 6
+a        = 1
+b        = 2
+c        = 3
+x2       = 7 ;Hold Start and press button X for palette 7, etc.
+y2       = 8
+z2       = 9
+a2       = 10
+b2       = 11
+c2       = 12
+
+[Arcade]
+;intro.storyboard = 
+;ending.storyboard = 

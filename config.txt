@@ -1,0 +1,381 @@
+;#####################################################################################################################
+;## PERSONALIZATION FILE FOR BROLY Z2i							    		        ##
+;## DON'T modify the values if there isn't any comment explaining what to do just above. This could mess the char.  ##
+;## If you're not sure, make a copy of the file before changing any value.					    					##
+;#####################################################################################################################
+
+[Statedef 5900]
+type = S
+
+[State 5900, Reset] ;Clear all int variables
+type = VarRangeSet
+trigger1 = time <= 0
+value = 0
+first = 0
+last = 59
+
+[State 5900, F.Reset] ;Clear all int variables
+type = VarRangeSet
+trigger1 = time <= 0
+fvalue = 0
+first = 0
+last = 39
+
+[State 5900,Attack] ;Attack Mulset replacement
+type = varset
+trigger1 = 1;time <= 0
+fvar(5) = 100 ;Functionally replaces your characters Attack value
+
+[State 5900,Juggle] ;Max Juggle Set 
+type = varset
+trigger1 = 1;time <= 0
+var(8) = 15 ;Dictates your characters juggle limit (commonly 15)
+
+[State 5900,Damage] ;Minimum Damage Set 
+type = varset
+trigger1 = 1;time <= 0
+var(18) = 7 ;Dictates your characters minimum damage (commonly 7)
+
+[State 5900,Weight] ;"Weight" (Used for vertical velocities)
+type = varset
+trigger1 = 1;time <= 0
+fvar(4) = 6.74 ;Affects how fast Broly falls during jumping or after certain moves in the air
+
+[State 5900,MAXIMUM Bar fill rate] 
+type = varset
+trigger1 = 1;time <= 0
+fvar(6) = 0.0005
+
+[State 5900,MAXIMUM Bar fEmpty Multiplier]
+type = varset
+trigger1 = 1;time <= 0
+var(1) = 5
+
+[State 5900,MAXIMUM Life drain rate]
+;Increase the number to slow down how quickly Broly loses life
+type = varset
+trigger1 = 1;time <= 0
+var(4) = 11
+
+[State 5900,EX Attack meter cost]
+type = varset
+trigger1 = 1;time <= 0
+var(53) = -500
+
+; READ CAREFULLY BEFORE EDITING STUFF PAST THIS POINT
+;=================================================
+
+; Throw Tech?
+[State 5900, 3]
+type = VarSet
+trigger1 = 1
+v = 0
+;#####################################################################################################################
+;## Choose if and how you want throw teching
+;## 0 = none
+;## 1 = Using Dash Collision
+;## 2 = Normal
+;## Default value is 2
+value = 2
+
+; General Sound Selection
+[State 5900, 3]
+type = VarAdd
+trigger1 = (var(25)&262144) =0
+v = 25
+;#####################################################################################################################
+;## Choose which general sounds you'd likw while playing
+;## *0 = HDBZ (Group 0/4)
+;## *1 = HDBZ 5.0 (Group 1/5)
+;## Default value is *1
+value = 262144*1
+
+; Focus Attack Dash Cancel
+[State 5900, 3]
+type = VarAdd
+trigger1 = (var(39)&134217728) =0
+v = 39
+;#####################################################################################################################
+;## Changing the *0 to *1 enables Broly to perform a FADC akin to the mechanic found in Street Fighter 4
+;## Default value is *0
+value = 134217728*0
+
+; Number of permitted Air Dashes
+[State 5900, 3]
+type = VarSet
+trigger1 = 1
+v = 11
+;#####################################################################################################################
+;## Choose how many times Broly can air dash
+;## Default value is 1
+value = 1
+
+; TRANSPARENT OR SOLID FX
+[State 5900, 3]
+type = VarAdd
+trigger1 = (var(25)&65536) =0
+v = 25
+;#####################################################################################################################
+;## Choose how you want the effects to be slightly transparent, or if you want them to be completely solid, old school
+;## style. Set the *0 value to *1 for transparent FX, and to *0 for solid FX.
+;## Default value is *0.
+value = 65536*0
+
+; SUPER BACKGROUND CHOICE
+[State 5900, 3]
+type = VarSet
+trigger1 = 1
+v = 13
+;#####################################################################################################################
+;## Choose which super background you want to use when Goku kills the opponent with a Super or Ultra move. Set the
+;## value to 0 to use the Street Fighter 3 Super BG, set the value to 1 to use the Jojo's Bizarre Adventure Super BG.
+;## Set the value to 2 to use the Super Dragon Ball Z Super BG. Set the value to any number greater than 2 to disable
+;## Super Background.
+;## Default value is 2.
+value = 2
+
+; REPEL PROJECTILE FX
+[State 5900, 3]
+type = VarAdd
+trigger1 = (var(25)&131072) =0
+v = 25
+;#####################################################################################################################
+;## Choose which repel projectile you want to use. Set the value to 0 if you want to use the new yellow/blue one. Set
+;## the value to 1 to use the old purple one.
+;## Default value is 0.
+value = 131072*0
+
+; EMOTION GAUGE - X AXIS
+[State 5900, 3]
+type = VarSet
+trigger1 = 1
+v = 45
+;#####################################################################################################################
+;## Set the value to move the Hope Gauge to a position that suits you (X Axis in this case). A positive value means
+;## forward (to the middle of the screen), a negative value means backward (to the border of the screen).
+;## Default value is 0.
+value = 0
+
+; EMOTION GAUGE - Y AXIS
+[State 5900, 3]
+type = VarSet
+trigger1 = 1
+v = 46
+;#####################################################################################################################
+;## Set the value to move the Hope Gauge to a position that suits you (Y Axis in this case). A positive value means
+;## upward, a negative value means downward.
+;## Default value is 0.
+value = 0
+
+;Change palette for button "a"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=1
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 1
+
+;Change palette for button "b"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=2
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 2
+
+;Change palette for button "c"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=3
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 3
+
+;Change palette for button "x"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=4
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 32;4
+
+;Change palette for button "y"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=5
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 33
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=6
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 6
+
+;Change palette for button "start" + "a"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=7
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 7
+
+;Change palette for button "start" + "b"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=8
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 8
+
+;Change palette for button "start" + "c"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=9
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 9
+
+;Change palette for button "start" + "x"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=10
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 10
+
+;Change palette for button "start" + "y"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=11
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 11
+
+;Change palette for button "start" + "z"
+[State 0, VarSet]
+type = VarSet
+trigger1 = RoundsExisted = 0
+trigger1 = palno=12
+v = 58   
+ ;#####################################################################################################################
+;## Change to the palette number you wish to add found in the palette folder. 
+;## Example to change this to 0042jango - peregrine mendicant.png would be value = 42
+value = 12
+
+;Change palette during intro using direction keys?
+[State 5900, 3]
+type = VarAdd
+triggerall = (var(25)&1) = 0 ;Active Bit is off
+trigger1 = 1
+v = 25
+;#####################################################################################################################
+;## Up increases 1 pal index, down decreases 1 pal index, right increases 10, down decreases 10. Press Start while in his standing anim to select
+;## 0 is off (Default) and 1 is on
+value = 0
+
+;Set max amount of palletes
+[State 5900, 3]
+type = VarSet
+trigger1 = 1
+v = 29
+;#####################################################################################################################
+;## Increase by one whenever you add a pallete to add it to the intro pallete selection 
+value = 103
+
+;=================================================
+
+;=================================================
+; DO NOT CHANGE ANYTHING BELOW THIS LINE !!!
+;=================================================
+; DO NOT CHANGE ANYTHING BELOW THIS LINE !!!
+;Palette Code
+[State 5900, Apply Pal]
+type = RemapPal
+trigger1 = var(58) > 0
+trigger1 = var(58) <= var(29)
+;Added just in case the palletes are set the same in config for...some fuckin reason. I'm paranoid aight?
+;Essentially the same logic but accomodates Partners now and even works in Swiss Army Knife
+trigger1 = var(58) = cond(enemy,name = "Broly Z2i",enemy,var(58),1) || cond(numpartner,cond(partner,name = "Broly Z2i",var(58) = partner,var(58),0),1) && id > 56 ;Not P1
+trigger1 = var(58) := var(58) + ID - 56
+source = 1,1
+dest = 1,var(58)
+
+[state 191, in Simul Mode]
+type = varadd
+triggerall = (var(25)&128)=0 ;Not set
+trigger1 = Teammode = Simul
+trigger2 = enemyNear,TeamMode = Simul
+trigger3 = numpartner > 0
+trigger4 = numenemy > 1
+var(25) = 128
+
+[state 191, VS Flying characters check (Babidi/Vegetto)] ;Bit 9
+type = varadd
+triggerall = (var(39)&256)=0 ;Not set
+;triggerall = enemy,authorname = "Team Z2"
+trigger1 = enemy,name = "Babidi Z2" 
+;trigger1 = enemy,name = "Vegetto Z2" 
+;trigger2 = enemy,name = "Babidi Z2" 
+var(39) = 256
+
+[state 191, vs Mini Game character] ;Bit 10
+type = varadd
+triggerall = (var(25)&512)=0 ;Not set
+trigger1 = (enemy,Name = "Saibamen Z2")
+trigger2 = (enemy,Name = "FarmerZ2")
+trigger3 = (enemy,Name = "Farmer Z2")
+trigger4 = (enemy,Name = "DrBriefs Z2")
+var(25) = 512
+
+[State 0, Initial X Pos]
+type = VarSet
+trigger1 = Time <= 0
+fvar(38) = Pos X
+persistent = 1
+
+[State 0, Initial Y Pos]
+type = VarSet
+trigger1 = Time <= 0
+fvar(39) = Pos Y
+persistent = 1
+
+[State 5900, End]
+type = changestate
+trigger1 = time <= 0
+value = ifelse(roundno = 1, 189, 0)
