@@ -650,7 +650,7 @@ triggerall = (var(25)&32) = 0
 triggerall = var(7) <= var(8) ;Current Juggle potential is less than Juggle Limit
 trigger1 = animelemtime(5) >= 0 && animelemtime(7) < 0
 attr = S, NA
-damage = ceil(cond(fvar(11) * 32 < var(18), var(18), fvar(11) * 32)), 222
+damage = ceil(cond(fvar(11) * 32 < var(18), var(18), fvar(11) * 32)), 0
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -1140,7 +1140,7 @@ triggerall = var(7) <= var(8) ;Current Juggle potential is less than Juggle Limi
 trigger1 = animelem = 4
 attr = S, NA
 animtype = Medium
-damage = ceil(cond(fvar(11) * 37 < var(18), var(18), fvar(11) * 37)), 20
+damage = ceil(cond(fvar(11) * 37 < var(18), var(18), fvar(11) * 37)), 0
 guardflag = MA
 hitflag = MAF
 pausetime = 11, 11
