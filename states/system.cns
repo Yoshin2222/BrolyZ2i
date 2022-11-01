@@ -3686,9 +3686,14 @@ sparkno		= -1
 p1facing		= 1
 p2facing		= 1
 ;p1stateno		= 801
+;Control P2 during Winposes system by altoiddealer
+fall.envshake.freq = TeamSide ;Optional... but recommended as another failproof
+fall.envshake.ampl = ID ;REQUIRED
+fall.envshake.phase = var(59) ;A VAR IS REQUIRED
 guard.dist	= 0
 fall		= 1
 fall.recover	= 0
+
 
 [State 0, ChangeState]
 type = ChangeState
