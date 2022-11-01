@@ -994,7 +994,7 @@ physics = N
 anim = 91011
 velset = random%10 - random%10,random%10 - random%10
 ctrl = 0
-sprpriority = random%3
+sprpriority = random%5
 
 [State 1061, NoShadow]
 type = AssertSpecial

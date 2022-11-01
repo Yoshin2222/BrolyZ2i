@@ -447,7 +447,7 @@ triggerall = cond(numtarget(stateno + 2 + ((var(25)&2048) = 0)),!(target, ishelp
 ;triggerall = var(19) > 0
 ;triggerall = var(16) >= 40
 trigger1 = movehit = 1
-value = cond(enemynear,statetype = A,1115030,203);1320
+value = 203;cond(enemynear,statetype = A,1115030,203);1320
 ID = stateno + 2 + ((var(25)&2048) = 0)
 ignorehitpause = 1
 persistent = 0
@@ -537,7 +537,7 @@ type = changestate
 triggerALL = alive
 trigger1 = statetype = A
 ;trigger1 = time >= gethitvar(slidetime)
-value = 1115030
+value = 5953
 ctrl = 0
 
 [State 1556, Velocity]
@@ -650,7 +650,7 @@ triggerall = (var(25)&32) = 0
 triggerall = var(7) <= var(8) ;Current Juggle potential is less than Juggle Limit
 trigger1 = animelemtime(5) >= 0 && animelemtime(7) < 0
 attr = S, NA
-damage = ceil(cond(fvar(11) * 32 < var(18), var(18), fvar(11) * 32)), 222
+damage = ceil(cond(fvar(11) * 32 < var(18), var(18), fvar(11) * 32)), 0
 animtype = Medium
 guardflag = MA
 hitflag = MAF
@@ -1140,7 +1140,7 @@ triggerall = var(7) <= var(8) ;Current Juggle potential is less than Juggle Limi
 trigger1 = animelem = 4
 attr = S, NA
 animtype = Medium
-damage = ceil(cond(fvar(11) * 37 < var(18), var(18), fvar(11) * 37)), 20
+damage = ceil(cond(fvar(11) * 37 < var(18), var(18), fvar(11) * 37)), 0
 guardflag = MA
 hitflag = MAF
 pausetime = 11, 11

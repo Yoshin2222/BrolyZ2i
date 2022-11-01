@@ -456,7 +456,7 @@ var(39) = 64
 type = lifeadd
 triggerall= (var(39)&1) != 0 ;MAXIMUM mode is ON
 triggerall = (var(25)&-2147483648) = 0 ;Not in Superpause
-triggerall = movetype != A && enemynear,movetype != H
+triggerall = movetype != A && movetype != H && enemynear,movetype != H
 trigger1 = time%var(4) = 0
 value = -ceil(fvar(1)*11)
 kill = 1
@@ -466,6 +466,7 @@ ignorehitpause = 1
 type = poweradd
 triggerall = (var(39)&1) != 0 ;MAXIMUM mode is ON
 triggerall = (var(25)&-2147483648) = 0 ;Not in Superpause
+triggerall = movetype != A && movetype != H && enemynear,movetype != H
 trigger1 = time%var(4) = 0
 value = ceil(fvar(1)*22)
 ignorehitpause = 1
