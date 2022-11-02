@@ -2427,6 +2427,7 @@ persistent = 0
 
 [State 0, Projectile]
 type = Projectile
+triggerall = root,var(7) <= root,var(8) ;Current Juggle potential is less than Juggle Limit
 ;Check Juggle is ON
 triggerall = root,cond((var(25)&32) = 0,1,0)
 trigger1 = abs(pos x - enemynear,pos x) < var(9) ;Only spawn when close to enemy
@@ -2558,6 +2559,7 @@ projstagebound = 1600
 
 [State 0, Projectile]
 type = Projectile
+triggerall = root,var(7) <= root,var(8) ;Current Juggle potential is less than Juggle Limit
 ;Check Juggle is ON
 triggerall = root,cond((var(25)&32) = 0,1,0)
 triggerall = !var(0)
@@ -2621,6 +2623,7 @@ ignorehitpause = 1
 
 [State detonate if EX hit]
 type = Projectile
+triggerall = root,var(7) <= root,var(8) ;Current Juggle potential is less than Juggle Limit
 ;Check Juggle is ON
 triggerall = root,cond((var(25)&32) = 0,1,0)
 triggerall = var(0)
