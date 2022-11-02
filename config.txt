@@ -324,17 +324,6 @@ value = 103
 ; DO NOT CHANGE ANYTHING BELOW THIS LINE !!!
 ;=================================================
 ; DO NOT CHANGE ANYTHING BELOW THIS LINE !!!
-;Palette Code
-[State 5900, Apply Pal]
-type = RemapPal
-trigger1 = var(58) > 0
-trigger1 = var(58) <= var(29)
-;Added just in case the palletes are set the same in config for...some fuckin reason. I'm paranoid aight?
-;Essentially the same logic but accomodates Partners now and even works in Swiss Army Knife
-trigger1 = var(58) = cond(enemy,name = "Broly Z2i",enemy,var(58),1) || cond(numpartner,cond(partner,name = "Broly Z2i",var(58) = partner,var(58),0),1) && id > 56 ;Not P1
-trigger1 = var(58) := var(58) + ID - 56
-source = 1,1
-dest = 1,var(58)
 
 [state 191, in Simul Mode]
 type = varadd
@@ -344,6 +333,18 @@ trigger2 = enemyNear,TeamMode = Simul
 trigger3 = numpartner > 0
 trigger4 = numenemy > 1
 var(25) = 128
+
+;Palette Code
+[State 5900, Apply Pal]
+type = RemapPal
+trigger1 = var(58) > 0
+trigger1 = var(58) <= var(29)
+;Added just in case the palletes are set the same in config for...some fuckin reason. I'm paranoid aight?
+;Essentially the same logic but accomodates Partners now and even works in Swiss Army Knife
+trigger1 = var(58) = cond(enemy,name = "Broly Z2i",enemy,var(58),1) || cond(numpartner,cond(partner,name = "Broly Z2i",var(58) = partner,var(58),0),1) && id > 56 ;Not P1
+trigger1 = var(58) := cond((var(25)&128) !=0 ,var(58) + ID - 56,var(58))
+source = 1,1
+dest = 1,var(58)
 
 [state 191, VS Flying characters check (Babidi/Vegetto)] ;Bit 9
 type = varadd
